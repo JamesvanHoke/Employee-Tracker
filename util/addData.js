@@ -1,4 +1,6 @@
-// * Add departments, roles, employees
+const inquirer = require("inquirer")
+
+//---------------------------------------------- Question Arrays ----------------------------------------------
 
 // Question Array for adding a new department
 const addDeptQuestions = [
@@ -50,39 +52,29 @@ const addRoleQuestions = [
   },
 ];
 
+// Question Array for adding an Employee
+const addEmployeeQuestions = [
+  {
+    type: "input",
+    message: "What is the employee's first name?",
+    name: "first_name",
+  },
+  {
+    type: "input",
+    message: "What is the employee's last name?",
+    name: "last_name",
+  },
+  {
+    type: "list",
+    message: "What role does this employee hold?",
+    name: "role",
+    choices: [], //Add Function to pull existing roles from DB
+  },
+  {
+    type: "list",
+    message: "Does this employee have a manager?",
+    name: "manager",
+    choices: [], //Add function to pull existing managers from DB
+  },
+];
 
-
-// function addFlavor() {
-//   inquirer
-//     .prompt([
-//       {
-//         type: "input",
-//         name: "flavor",
-//         message: "What flavor would you like to add?",
-//       },
-//       {
-//         type: "input",
-//         name: "price",
-//         message: "How much does it cost?",
-//       },
-//       {
-//         type: "input",
-//         name: "quantity",
-//         message: "How many do you have?",
-//       },
-//     ])
-//     .then(function (response) {
-//       console.log(response);
-//       const query =
-//         "INSERT INTO products (flavor, price, quantity) VALUES (?, ?, ?);";
-
-//       const foo = connection.query(
-//         query,
-//         [response.flavor, response.price, response.quantity],
-//         function (err, data) {
-//           console.log("Added flavor", response.flavor);
-//           console.log(foo.sql);
-//         }
-//       );
-//     });
-// }
