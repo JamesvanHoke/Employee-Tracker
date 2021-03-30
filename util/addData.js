@@ -60,12 +60,26 @@ const addEmployeeQuestions = [
   {
     type: "input",
     name: "first_name",
-    message: "What is the employee's first name?", //TODO: Add Validation
+    message: "What is the employee's first name?",
+    // Validates to make sure the user input a string and not a number
+    validate(value) {
+      if (isNaN(value) === true) {
+        return true;
+      }
+      return "please enter a valid name.";
+    },
   },
   {
     type: "input",
     name: "last_name",
-    message: "What is the employee's last name?", //TODO: Add Validation
+    message: "What is the employee's last name?",
+    // Validates to make sure the user input a string and not a number
+    validate(value) {
+      if (isNaN(value) === true) {
+        return true;
+      }
+      return "please enter a valid name.";
+    },
   },
   {
     type: "list",
