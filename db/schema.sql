@@ -22,6 +22,7 @@ CREATE TABLE employeeRole(
     title VARCHAR(30),
     -- allows for non-whole numbers to be stored
     salary DECIMAL,
+    department_id INT,
     PRIMARY KEY (id)
 );
 
