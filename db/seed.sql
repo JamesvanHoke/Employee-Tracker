@@ -7,11 +7,11 @@ VALUES
 ("Finance"),
 ("Admin");
 
-INSERT INTO employeeRole (title, salary, department_id)
+INSERT INTO employee_role (title, salary, department_id)
 VALUES
 ("Accountant", 160000, 5),
 ("Regional Manager", 130000, 6),
-("Lead Developr", 120000, 3),
+("Lead Developer", 120000, 3),
 ("Sales Lead", 70000, 1),
 ("Social Media Manager", 25000, 4),
 ("HR Rep", 61000, 2);

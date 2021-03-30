@@ -1,5 +1,5 @@
 -- Only used for testing purposes
--- DROP DATABASE IF EXISTS employee_db;
+DROP DATABASE IF EXISTS employee_db;
 
 -- Iniitializes our database
 CREATE DATABASE employee_db;
@@ -17,7 +17,7 @@ CREATE TABLE department(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE employeeRole(
+CREATE TABLE employee_role(
     id INT AUTO_INCREMENT NOT NULL,
     title VARCHAR(30),
     -- allows for non-whole numbers to be stored
