@@ -186,24 +186,29 @@ const addDataPrompt = async function () {
       // Runs Inquirer prompt from Employee Questions array, pulls the first name, last name, manager id, and role id into a variable
       const employeeResponse = await inquirer.prompt(addEmployeeQuestions);
 
+      // Queries our database for the managers ID
       const managerIDQuery = await connection.query(
-        "SELECT id FROM employee WHERE CONCAT (first_name, ' ', last_name, '; Employee ID#', id) = ?;",
-        [employeeResponse.manager]
+        "SELECT id FROM employee WHERE CONCAT (first_name, ' ', last_name, ' Employee ID#', id) = ?",
+        employeeResponse.manager
       );
+
+      // Maps our managers ID so we can use it.
       const managerId = await managerIDQuery.map((data) => data.id);
 
-      console.log(managerId);
+      // Queries our role database for role ID's equal to our selected role
+      const roleIdQuery = await connection.query(
+        "SELECT id FROM employee_role WHERE title = ?;",
+        employeeResponse.role
+      );
 
-      //   const roleIdQuery = await connection.query(
-      //     "SELECT id FROM employee_role WHERE title = ?;",
-      //     [employeeResponse.role]);
-      //   const roleId = await roleIdQuery.map((data) => data.id);
+      // Maps our role ID so we can use it.
+      const roleId = await roleIdQuery.map((data) => data.id);
 
-      let roleId = 2;
-
+      // Template MySQL INSERT for our employee table using placeholders.
       const employeeInsert =
         "INSERT INTO employee (first_name, last_name, manager_id, role_id) VALUES (?, ?, ?, ?);";
 
+      // sends our insert statement with filled placeholders to our database
       await connection.query(employeeInsert, [
         employeeResponse.first_name,
         employeeResponse.last_name,
@@ -211,11 +216,12 @@ const addDataPrompt = async function () {
         roleId,
       ]);
 
+      //Logs a confirmation to the user so they can see that the employee and their role has been added to the database.
+      console.log(
+        `${employeeResponse.role} ${employeeResponse.first_name} ${employeeResponse.last_name} has been added to the database.`
+      );
       break;
   }
 };
-
-// Test call, comment out before production.
-addDataPrompt();
 
 exports.module = addDataPrompt;
