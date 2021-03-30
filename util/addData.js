@@ -78,3 +78,40 @@ const addEmployeeQuestions = [
   },
 ];
 
+//---------------------------------------------- Question Prompt ----------------------------------------------
+
+// Sets as an async function so we can wait on inquirer responses
+const addDataPrompt = async function () {
+    
+  // Runs Inquirer to check which table they'd like to add to, pulls their response into a variable
+  const { SelectedType } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "SelectedType",
+      message: "What would you like to add to?",
+      choices: ["Department", "Role", "Employee", "None"],
+    },
+  ]);
+
+  //   Switch case for our first inq prompt
+  switch (SelectedType) {
+    case "Department":
+      // Run Department Questions array through inq
+      // INSERT in dept. table, pass in the name value pulled from prompt resp.
+      // Give user a console.log letting them know we did it
+      break;
+    case "Role":
+      // Run role Questions array through inq
+      // INSERT in role table, pass in the value salary, title, and dept_id pulled from prompt resp.
+      // Give user a console.log letting them know we did it
+      break;
+    case "Employee":
+      // Run Department Questions array through inq
+      // INSERT in employee table, pass in the first name, last name, role ID, and manager id values pulled from prompt resp.
+      // Give user a console.log letting them know we did it
+      break;
+  }
+};
+
+// Test call, comment out before production.
+addDataPrompt();
