@@ -1,4 +1,7 @@
-const inquirer = require("inquirer")
+const inquirer = require("inquirer");
+
+// Remove me for production, used to test prompts and adding to database
+const connection = require("./connection")
 
 //---------------------------------------------- Question Arrays ----------------------------------------------
 
@@ -6,8 +9,8 @@ const inquirer = require("inquirer")
 const addDeptQuestions = [
   {
     type: "input",
-    message: "What is the name of the department you'd like to add.",
     name: "dept_name",
+    message: "What is the name of the department you'd like to add.",
     // Validates to make sure the user input a string and not a number
     validate(value) {
       if (isNaN(value) === true) {
@@ -22,8 +25,8 @@ const addDeptQuestions = [
 const addRoleQuestions = [
   {
     type: "input",
-    message: "What is the title of the role you'd like to add.",
     name: "title",
+    message: "What is the title of the role you'd like to add.",
     // Validates to make sure the user input a string and not a number
     validate(value) {
       if (isNaN(value) === true) {
@@ -34,8 +37,8 @@ const addRoleQuestions = [
   },
   {
     type: "input",
-    message: "What is the yearly salary of the role",
     name: "salary",
+    message: "What is the yearly salary of the role",
     // Validates to make sure the user input a number and not a string
     validate(value) {
       if (isNaN(value) === false) {
@@ -46,8 +49,8 @@ const addRoleQuestions = [
   },
   {
     type: "list",
-    message: "Which department does this role belong to?",
     name: "department",
+    message: "Which department does this role belong to?",
     choices: [], // Add function to pull from existing departments in our DB and present them
   },
 ];
@@ -56,24 +59,24 @@ const addRoleQuestions = [
 const addEmployeeQuestions = [
   {
     type: "input",
-    message: "What is the employee's first name?",
     name: "first_name",
+    message: "What is the employee's first name?", //Add Validation
   },
   {
     type: "input",
-    message: "What is the employee's last name?",
     name: "last_name",
+    message: "What is the employee's last name?", //Add Validation
   },
   {
     type: "list",
-    message: "What role does this employee hold?",
     name: "role",
+    message: "What role does this employee hold?",
     choices: [], //Add Function to pull existing roles from DB
   },
   {
     type: "list",
-    message: "Does this employee have a manager?",
     name: "manager",
+    message: "Does this employee have a manager?",
     choices: [], //Add function to pull existing managers from DB
   },
 ];
@@ -82,7 +85,6 @@ const addEmployeeQuestions = [
 
 // Sets as an async function so we can wait on inquirer responses
 const addDataPrompt = async function () {
-    
   // Runs Inquirer to check which table they'd like to add to, pulls their response into a variable
   const { SelectedType } = await inquirer.prompt([
     {
@@ -96,10 +98,19 @@ const addDataPrompt = async function () {
   //   Switch case for our first inq prompt
   switch (SelectedType) {
     case "Department":
-      // Run Department Questions array through inq
-      // INSERT in dept. table, pass in the name value pulled from prompt resp.
-      // Give user a console.log letting them know we did it
+      // Runs Inquirer prompt from Questions array, pulls the dept_name from the response
+      const { dept_name } = await inquirer.prompt(addDeptQuestions);
+
+      //Our MySQL prompt to insert new data into our table using placeholders
+      const DepartmentInsert = "INSERT INTO department (dept_name) VALUES (?);";
+
+      // await function, passes in our response and fills in placeholder with dept_name variable
+      await connection.query(DepartmentInsert, [dept_name]);
+
+      //Logs a confirmation log to the user so they can see that something has been done.
+      console.log(dept_name + " has been added to the database.");
       break;
+
     case "Role":
       // Run role Questions array through inq
       // INSERT in role table, pass in the value salary, title, and dept_id pulled from prompt resp.
