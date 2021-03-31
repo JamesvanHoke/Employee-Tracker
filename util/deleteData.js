@@ -20,13 +20,13 @@ const deleteDataPrompt = async function (connection) {
         choices: departmentDB.map((data) => data.dept_name),
       });
 
-      const { confirm } = await inquirer.prompt({
+      const { DepConfirm } = await inquirer.prompt({
         type: "confirm",
         name: "confirm",
         message: `Are you sure you want to remove ${deptId}?`
       });
 
-      if(confirm === true){
+      if(DepConfirm === true){
           let dept;
           for (let i = 0; i < departmentDB.length; i++) {
             if (departmentDB[i].dept_name === deptId) {
@@ -40,8 +40,34 @@ const deleteDataPrompt = async function (connection) {
       }
       break;
     case "Roles":
+        const roleDB = await connection.query("SELECT * from employee_role")
+        const { roleId } = await inquirer.prompt({
+            type: "list",
+            name: "roleId",
+            message: "Which role do you want to remove?",
+            choices: departmentDB.map((data) => data.title),
+        })
+        const { roleConfirm } = await inquirer.prompt({
+            type: "confirm",
+            name: "confirm",
+            message: `Are you sure you want to remove ${roleId}?`
+          });
+    
+          if(roleConfirm === true){
+              let role;
+              for (let i = 0; i < roleDB.length; i++) {
+                if (roleDB[i].title === deptId) {
+                  role = departmentDB[i].id;
+                }
+              }
+              await connection.query("DELETE FROM employee_role WHERE id=?", role);
+              console.log(`${roleId} has been removed from the database`);
+          } else {
+              console.log(`Deletion of ${deptId} has been aborted.`)
+          }
       break;
     case "Employees":
+        console.log("Sorry, you can't remove your employees... yet")
       break;
     default:
       break;
