@@ -43,6 +43,7 @@ const init = async function () {
         "Add To The Company",
         "Update An Employee",
         "Delete From The Company",
+        // "View The Budget Of A Department",
         "Exit",
       ],
     },
@@ -65,6 +66,9 @@ const init = async function () {
       await deleteDataPrompt(connection);
       init();
       break;
+    // case "View The Budget Of A Department": //TODO: Implement budget view. "SELECT SUM(salary) FROM employee_role WHERE department_id = ?"
+    //   await viewBudgetPrompt(connection);
+    //   break;
     default:
       connection.end();
       break;
