@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 const addDataPrompt = require("./util/addData");
 const viewDataPrompt = require("./util/viewData");
 const updateDataPrompt = require("./util/updateData");
+// const deleteDataPrompt = require("./util/deleteData")
 const connection = require("./util/connection");
 
 console.log(`
@@ -40,7 +41,7 @@ const init = async function () {
       choices: [
         "View The Company",
         "Add To The Company",
-        "Update The Company",
+        "Update An Employee",
         "Exit",
       ],
     },
@@ -49,18 +50,19 @@ const init = async function () {
   switch (whatToDo) {
     case "View The Company":
       await viewDataPrompt(connection);
-      await init();
+      init();
       break;
     case "Add To The Company":
       await addDataPrompt(connection);
-      await init();
+      init();
       break;
-    case "Update The Company":
+    case "Update An Employee":
       await updateDataPrompt(connection)
-      await init();
+      init();
       break;
     case "Delete From The Company":
-      console.log("I still need to have a function made");
+      await deleteDataPrompt(connection);
+      init();
       break;
     default:
       connection.end();
