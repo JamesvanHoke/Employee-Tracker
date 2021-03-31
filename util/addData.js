@@ -1,8 +1,5 @@
 const inquirer = require("inquirer");
 
-// Remove me for production, used to test prompts and adding to database
-const connection = require("./connection");
-
 //---------------------------------------------- Question Arrays ----------------------------------------------
 
 // Question Array for adding a new department
@@ -98,7 +95,7 @@ const addEmployeeQuestions = [
 //---------------------------------------------- Question Prompt ----------------------------------------------
 
 // Sets as an async function so we can wait on inquirer responses
-const addDataPrompt = async function () {
+const addDataPrompt = async function (connection) {
   // Runs Inquirer to check which table they'd like to add to, pulls their response into a variable
   const { SelectedType } = await inquirer.prompt([
     {
@@ -224,4 +221,4 @@ const addDataPrompt = async function () {
   }
 };
 
-exports.module = addDataPrompt;
+module.exports = addDataPrompt;
