@@ -3,7 +3,7 @@ const inquirer = require("inquirer");
 const addDataPrompt = require("./util/addData");
 const viewDataPrompt = require("./util/viewData");
 const updateDataPrompt = require("./util/updateData");
-// const deleteDataPrompt = require("./util/deleteData")
+const deleteDataPrompt = require("./util/deleteData")
 const connection = require("./util/connection");
 
 console.log(`
@@ -42,6 +42,7 @@ const init = async function () {
         "View The Company",
         "Add To The Company",
         "Update An Employee",
+        "Delete From The Company",
         "Exit",
       ],
     },
