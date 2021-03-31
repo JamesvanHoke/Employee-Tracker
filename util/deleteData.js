@@ -22,7 +22,7 @@ const deleteDataPrompt = async function (connection) {
 
       const { DepConfirm } = await inquirer.prompt({
         type: "confirm",
-        name: "confirm",
+        name: "DepConfirm",
         message: `Are you sure you want to remove ${deptId}?`
       });
 
@@ -45,25 +45,25 @@ const deleteDataPrompt = async function (connection) {
             type: "list",
             name: "roleId",
             message: "Which role do you want to remove?",
-            choices: departmentDB.map((data) => data.title),
+            choices: roleDB.map((data) => data.title),
         })
         const { roleConfirm } = await inquirer.prompt({
             type: "confirm",
-            name: "confirm",
+            name: "roleConfirm",
             message: `Are you sure you want to remove ${roleId}?`
           });
-    
+
           if(roleConfirm === true){
               let role;
               for (let i = 0; i < roleDB.length; i++) {
-                if (roleDB[i].title === deptId) {
-                  role = departmentDB[i].id;
+                if (roleDB[i].title === roleId) {
+                  role = roleDB[i].id;
                 }
               }
               await connection.query("DELETE FROM employee_role WHERE id=?", role);
               console.log(`${roleId} has been removed from the database`);
           } else {
-              console.log(`Deletion of ${deptId} has been aborted.`)
+              console.log(`Deletion of ${roleId} has been aborted.`)
           }
       break;
     case "Employees":
