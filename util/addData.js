@@ -190,7 +190,12 @@ const addDataPrompt = async function (connection) {
       );
 
       // Maps our managers ID so we can use it.
-      const managerId = await managerIDQuery.map((data) => data.id);
+      let managerId;
+      if (employeeResponse.manager === "NULL") {
+        managerId = null;
+      } else {
+        managerId = await managerIDQuery.map((data) => data.id);
+      }
 
       // Queries our role database for role ID's equal to our selected role
       const roleIdQuery = await connection.query(
